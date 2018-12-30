@@ -1,3 +1,5 @@
 from django.shortcuts import render
+import pandas as pd
 
-# Create your views here.
+RawData = pd.read_csv('train.csv')
+print(RawData.head(5))
