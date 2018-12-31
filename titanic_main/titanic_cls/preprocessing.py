@@ -103,7 +103,7 @@ def adding_and_removing():
     RawData['Family_size'] = RawData['SibSp'] + RawData['Parch'] + 1
     RawData['Single'] = RawData['Family_size'].map(lambda s: 1 if s == 1 else 0)
     RawData['Small'] = RawData['Family_size'].map(lambda s: 1 if 2 <= s <= 4 else 0)
-    RawData['Big'] = RawData['Family_size'].map(lambda s: 1 if s <= 5 else 0)
+    RawData['Big'] = RawData['Family_size'].map(lambda s: 1 if s >= 5 else 0)
 
     '''Removing columns'''
     RawData.drop(['PassengerId', 'Cabin', 'Embarked', 'Family_size', 'SibSp', 'Parch', 'Name', 'Ticket'], axis=1, inplace=True)
@@ -115,7 +115,7 @@ RawData = adding_and_removing()
 
 def final_data():
     global RawData
-    titanic = RawData
-    return titanic
+    y = RawData.iloc[:, 0]
+    x = RawData.iloc[:, 1:]
+    return y, x
 
-print(final_data())
