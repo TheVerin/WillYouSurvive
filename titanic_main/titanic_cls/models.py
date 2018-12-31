@@ -2,9 +2,10 @@ from django.db import models
 
 
 class Titanic(models.Model):
-    title = models.IntegerField(max_length=10)
+    title = models.CharField(max_length=10)
     name = models.CharField(max_length=60)
     sex = models.CharField(max_length=10)
+    cls = models.CharField(max_length=10)
     age = models.IntegerField()
     family = models.IntegerField()
     fare = models.IntegerField()
