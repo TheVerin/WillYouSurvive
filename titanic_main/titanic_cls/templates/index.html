@@ -11,38 +11,41 @@
             <div>
                 <form>
                     <select name="title">
-                        <option value="Crew">Crew</option>
-                        <option value="Kid">Kid</option>
-                        <option value="Miss">Miss</option>
                         <option value="Mr">Mr</option>
                         <option value="Mrs">Mrs</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Kid">Kid</option>
                         <option value="Royality">Royality</option>
+                        <option value="Crew">Crew</option>
                     </select>
                     <input type="text" placeholder="What is your name?" name="name">
-                </form>
-                <br>
-                <form>
-                    <input type="radio" name="sex" value="Male" checked>Male<br>
-                    <input type="radio" name="sex" value="Feale">Female<br>
-                </form>
-                <br>
-                <form>
+                    <br><br>
+                    <select name="sex">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <br><br>
                     <input type="text" placeholder="How old are you?" name="age">
                     <input type="text" placeholder="How much was your ticket?" name="cost">
-                </form>
-                <br>
-                <form>
+                    <br><br>
+                    <p>Your class</p>
                     <select name="classs">
                         <option value="First">First</option>
                         <option value="Second">Second</option>
                         <option value="Third">Third</option>
                     </select>
+
+                    <p>How big is your family?</p>
                     <select name="family">
                         <option value="Single">Single</option>
                         <option value="Small <5">Small <5</option>
                         <option value="Big >5">Big >5</option>
                     </select>
+                    <input type="submit" value="Check">
                 </form>
+            </div>
+            <div>
+                <p>Result: {{ a }}</p>
             </div>
         </section>
     </body>

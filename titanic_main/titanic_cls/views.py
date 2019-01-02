@@ -23,16 +23,17 @@ def final(request):
 
     if request.GET.get('name'):
         name = request.GET.get('name')
-        sex = request.GET.get('sex')
+        sex = request.GET['sex']
         age_x = request.GET.get('age')
         age = int(age_x)
-        classs = request.GET.get('classs')
+        classs = request.GET['classs']
         cost_x = request.GET.get('cost')
         cost = int(cost_x)
-        title = request.GET.get('title')
-        family = request.GET.get('family')
+        title = request.GET['title']
+        family = request.GET['family']
 
     def preprocessing():
+        global df_vector
         for i in df_vector.columns.values:
             if i == 'sex':
                 df_vector['sex'] = sex
@@ -48,6 +49,7 @@ def final(request):
             elif i == family:
                 df_vector.set_value('first', i, 1)
         return df_vector
+    a = preprocessing()
 
     def predict():
         return model.predict(preprocessing())
@@ -81,4 +83,18 @@ def final(request):
             'result': result
         }
 
+    )
+
+
+def dead(request):
+    return render(
+        request,
+        'died.html'
+    )
+
+
+def alive(request):
+    return render(
+        request,
+        'alive.html'
     )
