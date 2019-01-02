@@ -5,10 +5,10 @@ from titanic_cls.models import Titanic
 
 model = ml_model.classifier()
 vector = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-df_vector = pd.DataFrame(vector, index=['first'], columns=['sex', 'age', 'fare',
-                                                         'First', 'Second', 'Third',
-                                                         'Crew', 'Kid', 'Miss', 'Mr', 'Mrs', 'Royality',
-                                                         'Single', 'Small <5', 'Big >5'])
+df_vector = pd.DataFrame(vector, index=['first'], columns=['sex', 'age', 'cost',
+                                                           'First', 'Second', 'Third',
+                                                           'Crew', 'Kid', 'Miss', 'Mr', 'Mrs', 'Royality',
+                                                           'Single', 'Small <5', 'Big >5'])
 
 
 def final(request):
