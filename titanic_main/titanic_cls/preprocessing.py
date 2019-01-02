@@ -11,11 +11,11 @@ def sex():
     return RawData
 
 
-RawData = sex()
+RawData_sex = sex()
 
 
 def get_title():
-    global RawData
+    global RawData_sex
 
     title_dictionary = {'Rev': 'Crew',
                         'Miss': 'Miss',
@@ -35,15 +35,15 @@ def get_title():
                         'Mrs': 'Mrs',
                         'Sir': 'Royality'}
 
-    RawData['Title'] = RawData['Name'].map(lambda name: name.split(',')[1].split('.')[0].strip())
-    RawData['Title'] = RawData.Title.map(title_dictionary)
-    return RawData
+    RawData_sex['Title'] = RawData_sex['Name'].map(lambda name: name.split(',')[1].split('.')[0].strip())
+    RawData_sex['Title'] = RawData_sex.Title.map(title_dictionary)
+    return RawData_sex
 
 
-RawData = get_title()
+RawData_title = get_title()
 
 
-grouped_train = RawData.iloc[:891].groupby(['Sex', 'Pclass', 'Title'])
+grouped_train = RawData_title.iloc[:891].groupby(['Sex', 'Pclass', 'Title'])
 grouped_median_train = grouped_train.median()
 grouped_median_train = grouped_median_train.reset_index()[['Sex', 'Pclass', 'Title', 'Age']]
 
@@ -57,65 +57,66 @@ def fill_age(row):
 
 
 def process_age():
-    global RawData
-    RawData['Age'] = RawData.apply(lambda row: fill_age(row)
+    global RawData_title
+    RawData_title['Age'] = RawData_title.apply(lambda row: fill_age(row)
     if np.isnan(row['Age']) else row['Age'], axis=1)
-    return RawData
+    return RawData_title
 
 
-RawData = process_age()
+RawData_age = process_age()
 
 
 def process_fares():
-    global RawData
-    RawData.Fare.fillna(RawData.iloc[:].Fare.mean(), inplace=True)
-    return RawData
+    global RawData_age
+    RawData_age.Fare.fillna(RawData_age.iloc[:].Fare.mean(), inplace=True)
+    return RawData_age
 
 
-RawData = process_fares()
+RawData_fares = process_fares()
 
 
 def process_class():
-    global RawData
-    pclass_dummies = pd.get_dummies(RawData['Pclass'], prefix='Pclass')
-    RawData = pd.concat([RawData, pclass_dummies], axis=1)
-    return RawData
+    global RawData_fares
+    pclass_dummies = pd.get_dummies(RawData_fares['Pclass'], prefix='Pclass')
+    RawData_fares = pd.concat([RawData_fares, pclass_dummies], axis=1)
+    return RawData_fares
 
 
-RawData = process_class()
+RawData_class = process_class()
 
 
 def title_dummies():
-    global RawData
-    title_dummies = pd.get_dummies(RawData['Title'], prefix = 'Title')
-    RawData = pd.concat([RawData, title_dummies], axis = 1)
-    RawData.drop('Title', axis = 1, inplace = True)
-    return RawData
+    global RawData_class
+    title_dummies = pd.get_dummies(RawData_class['Title'], prefix='Title')
+    RawData_class = pd.concat([RawData_class, title_dummies], axis=1)
+    RawData_class.drop('Title', axis=1, inplace=True)
+    return RawData_class
 
 
-RawData = title_dummies()
+RawData_title = title_dummies()
 
 
 def adding_and_removing():
-    global RawData
+    global RawData_title
 
     '''Adding columns'''
-    RawData['Family_size'] = RawData['SibSp'] + RawData['Parch'] + 1
-    RawData['Single'] = RawData['Family_size'].map(lambda s: 1 if s == 1 else 0)
-    RawData['Small'] = RawData['Family_size'].map(lambda s: 1 if 2 <= s <= 4 else 0)
-    RawData['Big'] = RawData['Family_size'].map(lambda s: 1 if s >= 5 else 0)
+    RawData_title['Family_size'] = RawData_title['SibSp'] + RawData_title['Parch'] + 1
+    RawData_title['Single'] = RawData_title['Family_size'].map(lambda s: 1 if s == 1 else 0)
+    RawData_title['Small'] = RawData_title['Family_size'].map(lambda s: 1 if 2 <= s <= 4 else 0)
+    RawData_title['Big'] = RawData_title['Family_size'].map(lambda s: 1 if s >= 5 else 0)
 
     '''Removing columns'''
-    RawData.drop(['PassengerId', 'Cabin', 'Embarked', 'Family_size', 'SibSp', 'Parch', 'Name', 'Ticket'], axis=1, inplace=True)
-    return RawData
+    RawData_title.drop(['PassengerId', 'Cabin', 'Embarked', 'Family_size',
+                        'SibSp', 'Parch', 'Name', 'Ticket', 'Pclass'],
+                       axis=1, inplace=True)
+    return RawData_title
 
 
-RawData = adding_and_removing()
+RawData_final = adding_and_removing()
 
 
 def final_data():
-    global RawData
-    y = RawData.iloc[:, 0]
-    x = RawData.iloc[:, 1:]
+    global RawData_final
+    y = RawData_final.iloc[:, 0]
+    x = RawData_final.iloc[:, 1:]
     return y, x
-
