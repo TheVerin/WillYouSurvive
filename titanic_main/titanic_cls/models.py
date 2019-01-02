@@ -7,7 +7,7 @@ class Titanic(models.Model):
     sex = models.CharField(max_length=10)
     cls = models.CharField(max_length=10)
     age = models.IntegerField()
-    family = models.IntegerField()
+    family = models.CharField(max_length=10, default='NaN')
     fare = models.IntegerField()
     result = models.IntegerField(default='000000')
 

@@ -35,7 +35,7 @@ def final(request):
     def preprocessing():
         for i in df_vector.columns.values:
             if i == 'sex':
-                df_vector.set_value('first', i, sex)
+                df_vector['sex'] = sex
                 df_vector['sex'] = df_vector['sex'].map({'Male': 1, 'Female': 0})
             elif i == 'cost':
                 df_vector.set_value('first', i, cost)
@@ -65,6 +65,7 @@ def final(request):
         fare=cost,
         result=result
     )
+    obj.save()
 
     return render(
         request,
