@@ -9,6 +9,7 @@ class Titanic(models.Model):
     age = models.IntegerField()
     family = models.IntegerField()
     fare = models.IntegerField()
+    result = models.IntegerField(default='000000')
 
     class Meta:
         db_table = 'titanic'

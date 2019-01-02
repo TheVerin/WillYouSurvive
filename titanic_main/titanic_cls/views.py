@@ -5,10 +5,10 @@ from titanic_cls.models import Titanic
 
 model = ml_model.classifier()
 vector = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-df_vector = pd.DataFrame(vector, index='0', columns=['sex', 'age', 'fare',
-                                                     'First', 'Second', 'Third',
-                                                     'Crew', 'Kid', 'Miss', 'Mr', 'Mrs', 'Royality',
-                                                     'Single', 'Small <5', 'Big >5'])
+df_vector = pd.DataFrame(vector, index=['first'], columns=['sex', 'age', 'fare',
+                                                         'First', 'Second', 'Third',
+                                                         'Crew', 'Kid', 'Miss', 'Mr', 'Mrs', 'Royality',
+                                                         'Single', 'Small <5', 'Big >5'])
 
 
 def final(request):
@@ -35,18 +35,18 @@ def final(request):
     def preprocessing():
         for i in df_vector.columns.values:
             if i == 'sex':
-                df_vector.set_value('0', i, sex)
+                df_vector.set_value('first', i, sex)
                 df_vector['sex'] = df_vector['sex'].map({'Male': 1, 'Female': 0})
             elif i == 'cost':
-                df_vector.set_value('0', i, cost)
+                df_vector.set_value('first', i, cost)
             elif i == 'age':
-                df_vector.set_value('0', i, age)
+                df_vector.set_value('first', i, age)
             elif i == classs:
-                df_vector.set_value('0', i, 1)
+                df_vector.set_value('first', i, 1)
             elif i == title:
-                df_vector.set_value('0', i, 1)
+                df_vector.set_value('first', i, 1)
             elif i == family:
-                df_vector.set_value('0', i, 1)
+                df_vector.set_value('first', i, 1)
         return df_vector
 
     def predict():
